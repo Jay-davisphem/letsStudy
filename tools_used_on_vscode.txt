@@ -1,0 +1,9 @@
+# useful vsc extextion
+Pretteir
+auto-rename-tag
+
+# installations
+pip install virtualenv
+
+do virtualenv {name you wish} or rather python -m venv venv
+
