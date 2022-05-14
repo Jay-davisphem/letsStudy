@@ -2,6 +2,25 @@
 <div>
   <h1>{{room.name}}</h1>
   <p>{{room.description}}</p>
+  <div class="comment-wrapper">
+    <h3>Conversations</h3>
+
+    <hr />
+    {% for chat in chats %}
+    <div>
+      <small>@{{ chat.user }} {{ chat.created|timesince }} ago</small>
+      <p>{{chat.body}}</p>
+    </div>
+    {% endfor %}
+  </div>
+  {% if request.user.is_authenticated %}
+  <div class="comment-form">
+    <form method="post" actions="">
+      {% csrf_token %}
+      <input type="text" name="body" placeholder="Write your message here..." />
+    </form>
+  </div>
+  {% endif %}
 </div>
 
 {% endblock %}
