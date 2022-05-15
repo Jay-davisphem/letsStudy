@@ -1,26 +1,50 @@
 {% extends 'base.html' %} {% block content %}
-<div>
-  <h1>{{room.name}}</h1>
-  <p>{{room.description}}</p>
-  <div class="comment-wrapper">
-    <h3>Conversations</h3>
+<style>
+  .room-container {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+  }
+</style>
+<div class="room-container">
+  <div>
+    <h1>{{room.name}}</h1>
+    <p>{{room.description}}</p>
+    <div class="comment-wrapper">
+      <h3>Conversations</h3>
 
+      <hr />
+      {% for chat in chats %}
+      <div>
+        {% if request.user == chat.user %}
+        <a href="{% url 'delete-message' chat.id %}">Delete</a>
+        {% endif %}
+        <small>@{{ chat.user }} {{ chat.created|timesince }} ago</small>
+        <p>{{chat.body}}</p>
+      </div>
+      {% endfor %}
+    </div>
+    {% if request.user.is_authenticated %}
+    <div class="comment-form">
+      <form method="post" actions="">
+        {% csrf_token %}
+        <input
+          type="text"
+          name="body"
+          placeholder="Write your message here..."
+        />
+      </form>
+    </div>
+    {% endif %}
+  </div>
+  <div>
+    <h3>Participants</h3>
     <hr />
-    {% for chat in chats %}
+    {% for participant in participants %}
     <div>
-      <small>@{{ chat.user }} {{ chat.created|timesince }} ago</small>
-      <p>{{chat.body}}</p>
+      <p>@{{ participant }}</p>
     </div>
     {% endfor %}
   </div>
-  {% if request.user.is_authenticated %}
-  <div class="comment-form">
-    <form method="post" actions="">
-      {% csrf_token %}
-      <input type="text" name="body" placeholder="Write your message here..." />
-    </form>
-  </div>
-  {% endif %}
 </div>
 
 {% endblock %}

@@ -21,20 +21,27 @@ def home(request):
     )
 
     topics = Topic.objects.all()
-    context = {"rooms": rooms, "topics": topics, "rooms_count": rooms.count()}
+    chats = Message.objects.filter(Q(room__topic__name__icontains=q))
+    context = {
+        "rooms": rooms,
+        "topics": topics,
+        "rooms_count": rooms.count(),
+        "chats": chats,
+    }
     return render(request, "main/home.html", context)
 
 
 def room(request, pk):
     room = Room.objects.get(pk=pk)
     chats = room.message_set.all().order_by("-created")
-
+    participants = room.participants.all()
     if request.method == "POST":
         message = Message.objects.create(
             user=request.user, room=room, body=request.POST.get("body")
         )
+        room.participants.add(request.user)
         return redirect("room", pk=room.id)
-    context = {"room": room, "chats": chats}
+    context = {"room": room, "chats": chats, "participants": participants}
     return render(request, "main/room.html", context)
 
 
@@ -123,3 +130,21 @@ def register_view(request):
             messages.error(request, "An error occured during registration")
     context = {"page": page, "form": form}
     return render(request, "main/login_register.html", context)
+
+
+def delete_message(request, pk):
+    chat = Message.objects.get(id=pk)
+    context = {"chat": chat}
+
+    if request.user != chat.user:
+        return HttpResponse("You don't have the permission to do this! ")
+
+    if request.method == "POST":
+        room_id = chat.room.id
+        chat.delete()
+        return redirect("room", pk=room_id)
+    return render(request, "main/delete.html", context)
+
+def user_profile(request, pk):
+    context = {}
+    return render(request, 'main/profile.html', context)
