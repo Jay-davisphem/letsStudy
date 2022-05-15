@@ -145,6 +145,11 @@ def delete_message(request, pk):
         return redirect("room", pk=room_id)
     return render(request, "main/delete.html", context)
 
+
 def user_profile(request, pk):
-    context = {}
-    return render(request, 'main/profile.html', context)
+    user = User.objects.get(pk=pk)
+    chats = user.message_set.all()
+    topics = Topic.objects.all()
+    rooms = user.room_set.all()
+    context = {"user": user, "rooms": rooms, "chats": chats, "topics": topics}
+    return render(request, "main/profile.html", context)

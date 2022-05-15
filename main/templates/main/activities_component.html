@@ -2,7 +2,10 @@
 <hr />
 {% for chat in chats %}
 <div>
-    <small>@{{chat.user}} {{chat.created|timesince}}</small>
+    <small>
+        <a href="{% url 'user-profile' chat.user.id %}">@{{chat.user}}</a>
+        {{chat.created|timesince}}
+    </small>
     <small>replied to "{{chat.room}}"</small>
     <p>{{chat.body}}</p>
     {% if request.user == chat.user %}

@@ -32,6 +32,9 @@ class Message(models.Model):
     updated = models.DateTimeField(auto_now=True)  # saves everytime
     created = models.DateTimeField(auto_now_add=True)  # once on creation
 
+    class Meta:
+        ordering = ["-updated", "-created"]
+
     def __str__(self):
         elipsis = ""
         if len(self.body) > 50:
