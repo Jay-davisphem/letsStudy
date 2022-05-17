@@ -25,7 +25,7 @@ def home(request):
     context = {
         "rooms": rooms,
         "topics": topics,
-        "rooms_count": rooms.count(),
+        "rooms_count": rooms.count,
         "chats": chats,
     }
     return render(request, "main/home.html", context)
@@ -151,9 +151,16 @@ def delete_message(request, pk):
 
 
 def user_profile(request, pk):
+    all_rooms = Room.objects.all()
     user = User.objects.get(pk=pk)
     chats = user.message_set.all()
     topics = Topic.objects.all()
     rooms = user.room_set.all()
-    context = {"user": user, "rooms": rooms, "chats": chats, "topics": topics}
+    context = {
+        "user": user,
+        "rooms": rooms,
+        "chats": chats,
+        "topics": topics,
+        "rooms_count": all_rooms.count(),
+    }
     return render(request, "main/profile.html", context)
