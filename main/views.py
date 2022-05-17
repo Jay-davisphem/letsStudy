@@ -32,7 +32,7 @@ def home(request):
 
 
 def room(request, pk):
-    room = Room.objects.get(pk=pk)
+    room = Room.objects.get(id=pk)
     chats = room.message_set.all().order_by("-created")
     participants = room.participants.all()
     if request.method == "POST":
@@ -53,9 +53,10 @@ def create_room(request):
         if form.is_valid():
             room = form.save(commit=False)
             room.host = request.user
+            room.save()
             room.participants.add(request.user)
             room.save()
-            return redirect("home")
+            return redirect("room", pk=room.id)
     context = {"form": form}
     return render(request, "main/room_form.html", context)
 
@@ -71,7 +72,7 @@ def update_room(request, pk):
         form = RoomForm(request.POST, instance=room)
         if form.is_valid():
             form.save()
-            return redirect("home")
+            return redirect("room", pk=room.id)
     context = {"form": form}
     return render(request, "main/room_form.html", context)
 

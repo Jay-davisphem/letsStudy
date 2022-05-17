@@ -8,11 +8,19 @@
     <input type="password" name="password" placeholder="Enter Password" />
     <input type="submit" value="Login" />
     <p>
-      Haven't signed up yet? <a href="{% url 'register' %}">Sign Up here!</a>
+      Haven't signed up yet?
+      <a href="{% url 'register' %}?next={% firstof request.path '/' %}"
+        >Sign Up here!</a
+      >
     </p>
     {% else %} {{ form.as_p }}
     <input type="submit" value="Register" />
-    <p>Already registered? <a href="{% url 'login' %}">Login here!</a></p>
+    <p>
+      Already registered?
+      <a href="{% url 'login' %}?next={% firstof request.path '/' %}"
+        >Login here!</a
+      >
+    </p>
     {% endif %}
   </form>
 </div>
