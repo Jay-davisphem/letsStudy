@@ -1,4 +1,4 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} {% block content %}{% load static %}
 <main class="profile-page layout layout--2">
   <div class="container">
    <!-- Room Start -->
@@ -91,7 +91,7 @@
         <div class="room__header scroll">
           <div class="room__info">
             <h3>{{ room.name }}</h3>
-            <span>{{ room.created|timesince }} days ago</span>
+            <span>{{ room.created|timesince }} ago</span>
           </div>
           <div class="room__hosted">
             <p>Hosted By</p>
@@ -100,7 +100,7 @@
               class="room__author"
             >
               <div class="avatar avatar--small">
-                <img src="https://randomuser.me/api/portraits/men/37.jpg" />
+                <img src="{{ room.host.avatar.url }}" />
               </div>
               <span>@{{ room.host }}</span>
             </a>
@@ -120,7 +120,7 @@
                   >
                     <div class="avatar avatar--small">
                       <img
-                        src="https://randomuser.me/api/portraits/men/37.jpg"
+                        src="{{ chat.user.avatar.url }}"
                       />
                     </div>
                     <span>@{{ chat.user.username }}</span>
@@ -176,7 +176,11 @@
         {% for participant in participants %}
         <a href="{% url 'user-profile' participant.id %}" class="participant">
           <div class="avatar avatar--medium">
-            <img src="https://randomuser.me/api/portraits/men/37.jpg" />
+            {% if participant.avatar.url %}
+            <img src="{{ participant.avatar.url }}" />
+            {% else %}
+            <img src="{% static 'images/avatar.svg' %}" />    
+            {% endif %}
           </div>
           <p>
             {{ participant.username }}
