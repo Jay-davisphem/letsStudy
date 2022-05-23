@@ -190,3 +190,9 @@ def topics_page(request):
     topics = Topic.objects.filter(name__icontains=q)
     context = {"topics": topics}
     return render(request, "main/topics.html", context)
+
+
+def activities_page(request):
+    chats = Message.objects.all()
+    context = {"chats": chats}
+    return render(request, "main/activities.html", context)
