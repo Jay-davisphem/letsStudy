@@ -18,6 +18,23 @@
       {% endfor %}
     </ul>
     {% endif %} {% block content %} {% endblock %}
+    <footer
+      style="
+        color: var(--color-main-light);
+        text-align: center;
+        position: absolute;
+        bottom: 0;
+        left: 35%;
+        font-size: 1.2em;
+      "
+    >
+      <p>
+        Made by
+        <a href="https://github.com/jay-davisphem" title="My github codes"
+          >David Oluwafemi</a
+        >
+      </p>
+    </footer>
     <script src="{% static 'js/script.js' %}"></script>
   </body>
 </html>
