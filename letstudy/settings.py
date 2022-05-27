@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,7 +29,7 @@ SECRET_KEY = os.getenv(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DJANGO_DEBUB", "") != "False"
 
-ALLOWED_HOSTS = ['localhost', 'letsStudy.herokuapp.com']
+ALLOWED_HOSTS = ["localhost", "letsStudy.herokuapp.com"]
 
 
 # Application definition
@@ -88,7 +89,7 @@ DATABASES = {
         "NAME": "lets-study-db",
         "PASSWORD": "phemmy2022",
         "HOST": "127.0.0.1",
-        "PORT": ""
+        "PORT": "",
     }
 }
 
@@ -131,14 +132,14 @@ MEDIA_URL = "/images/"
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 MEDIA_ROOT = BASE_DIR / "static/images"
-# STATIC_ROOT =
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 CORS_ALLOW_ALL_ORIGINS = True
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
 
 import dj_database_url
 
