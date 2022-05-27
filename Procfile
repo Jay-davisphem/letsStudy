@@ -1,1 +1,1 @@
-web: gunicorn cookbook.wsgi --log-file -
+web: gunicorn letstudy.wsgi --log-file -
