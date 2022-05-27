@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DJANGO_DEBUB", "") != "False"
 
-ALLOWED_HOSTS = ["localhost", "letsStudy.herokuapp.com"]
+ALLOWED_HOSTS = ["localhost", "letsstud.herokuapp.com"]
 
 
 # Application definition
