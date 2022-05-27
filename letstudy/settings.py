@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,12 +20,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-dthzhozwdtjhf5c3ue9879u%38(qrpgh51qx^+gn*fi9s4fs&+"
+SECRET_KEY = os.getenv(
+    "DJANGO_SECRET_KEY",
+    "django-insecure-@1mvr+z1(8i*&oao&bo5quvrseype5hmgqp)(muhl#hjlv9f+@",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DJANGO_DEBUB", "") != "False"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', 'letsStudy.herokuapp.com']
 
 
 # Application definition
@@ -53,6 +56,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 ROOT_URLCONF = "letstudy.urls"
 
 TEMPLATES = [
@@ -79,11 +84,13 @@ WSGI_APPLICATION = "letstudy.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "lets-study-db",
+        "PASSWORD": "phemmy2022",
+        "HOST": "127.0.0.1",
+        "PORT": ""
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -109,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Africa/Lagos"
 
 USE_I18N = True
 
@@ -131,3 +138,9 @@ MEDIA_ROOT = BASE_DIR / "static/images"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 CORS_ALLOW_ALL_ORIGINS = True
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+import dj_database_url
+
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES["default"].update(db_from_env)
