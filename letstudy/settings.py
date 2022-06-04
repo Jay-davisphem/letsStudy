@@ -67,7 +67,7 @@ MIDDLEWARE = [
 ]
 
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.GzipManifestStaticFilesStorage"
 ROOT_URLCONF = "letstudy.urls"
 
 TEMPLATES = [
