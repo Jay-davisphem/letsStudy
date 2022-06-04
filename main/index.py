@@ -4,9 +4,12 @@ from algoliasearch_django.decorators import register
 
 from .models import User, Room, Message, Topic
 
+
 @register(User)
 class UserIndex(AlgoliaIndex):
     fields = ["name", "bio", "avatar", "username", "pk"]
+    settings = {"searchableAttributes": ["name", "bio", "username"]}
+
 
 algol.register(Room)
 algol.register(Topic)
