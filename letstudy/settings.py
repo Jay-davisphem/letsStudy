@@ -67,7 +67,7 @@ MIDDLEWARE = [
 ]
 
 
-STATICFILES_STORAGE = "whitenoise.storage.GzipManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.django.GzipManifestStaticFilesStorage"
 ROOT_URLCONF = "letstudy.urls"
 
 TEMPLATES = [
