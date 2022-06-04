@@ -22,6 +22,7 @@ cwcwidth==0.1.6
 decorator==5.1.1
 defusedxml==0.7.1
 Deprecated==1.2.13
+dotenv
 dj-database-url==0.5.0
 Django==4.0.2
 django-cors-headers==3.11.0
