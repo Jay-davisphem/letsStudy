@@ -157,6 +157,8 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_ROOT = BASE_DIR / "static/images"
 
+LOGIN_REDIRECT_URL = "/login"
+ACCOUNT_SIGNUP_REDIRECT_URL = "/profile"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 CORS_ALLOW_ALL_ORIGINS = True
