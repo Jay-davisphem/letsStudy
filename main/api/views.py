@@ -50,7 +50,7 @@ def get_rooms(request, pk=None):
             return Response(serializer.data)
         query = request.GET.get("q")
         if query:
-            results = client.perform_search(query)
+            results = client.perform_search(query, "room")
             return Response(results)
         rooms = Room.objects.all()
         page = paginator.paginate_queryset(rooms, request)
@@ -143,6 +143,10 @@ class CreateListRoomMessageAPIView(APIView):
         )
 
     def get(self, request, pk=None):
+        query = request.GET.get("q")
+        if query:
+            results = client.perform_search(query, "message")
+            return Response(results)
         messages = Message.objects.filter(room__id=pk)
         page = paginator.paginate_queryset(messages, request)
         serializer = MessageSerializer(page, many=True, context={"request": request})

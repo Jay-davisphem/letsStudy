@@ -11,7 +11,7 @@ def get_index(index_name="davisphem_Room"):
     return index
 
 
-def perform_search(query, **kwargs):
-    index = get_index()
+def perform_search(query, val, **kwargs):
+    index = get_index(index_name="davisphem_" + val.capitalize())
     results = index.search(query)
     return results
