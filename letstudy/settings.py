@@ -11,12 +11,15 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-#APPEND_SLASH=False
+# APPEND_SLASH=False
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -27,7 +30,7 @@ SECRET_KEY = os.getenv(
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DJANGO_DEBUB", "") != "False"
+DEBUG = os.getenv("DJANGO_DEBUG", "") != "False"
 
 ALLOWED_HOSTS = ["localhost", "letsstud.herokuapp.com"]
 
@@ -41,8 +44,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # internal apps
     "main.apps.MainConfig",
+    # third party api services
+    "algoliasearch_django",
+    # third party packages
     "rest_framework",
+    "rest_framework.authtoken",
     "corsheaders",
 ]
 AUTH_USER_MODEL = "main.User"
@@ -112,6 +120,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# REST FRAMEWORK Defalut Authentications, Pagination and Permissions
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly"
+    ],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 2,
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
@@ -146,3 +166,9 @@ import dj_database_url
 
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES["default"].update(db_from_env)
+
+ALGOLIA = {
+    "APPLICATION_ID": os.getenv("ALGOLIA_APP_ID"),
+    "API_KEY": os.getenv("ALGOLIA_API_KEY"),
+    "INDEX_PREFIX": "davisphem",
+}
