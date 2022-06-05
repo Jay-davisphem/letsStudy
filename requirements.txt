@@ -27,11 +27,11 @@ Deprecated==1.2.13
 dj-database-url==0.5.0
 Django==4.0.2
 django-cors-headers==3.11.0
-django-graphql-jwt==0.3.4
 django-heroku==0.3.1
 django-js-asset==2.0.0
-django-rest-swagger==2.2.0
 djangorestframework==3.13.1
+djangorestframework-simplejwt
+drf-yasg
 executing==0.8.3
 fastdiff==0.3.0
 greenlet==1.1.2

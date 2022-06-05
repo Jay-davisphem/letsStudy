@@ -51,7 +51,9 @@ INSTALLED_APPS = [
     # third party packages
     "rest_framework",
     "rest_framework.authtoken",
+    "drf_yasg",
     "corsheaders",
+    "rest_framework_simplejwt",
 ]
 AUTH_USER_MODEL = "main.User"
 MIDDLEWARE = [
@@ -125,6 +127,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.TokenAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticatedOrReadOnly"
