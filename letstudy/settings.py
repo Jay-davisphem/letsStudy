@@ -69,7 +69,7 @@ MIDDLEWARE = [
 ]
 
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"  # "whitenoise.storage.CompressedManifestStaticFilesStorage"
 ROOT_URLCONF = "letstudy.urls"
 
 TEMPLATES = [
