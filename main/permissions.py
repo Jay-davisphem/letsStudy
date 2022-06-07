@@ -1,15 +1,15 @@
 from rest_framework import permissions
 
 
-class IsOwner(permissions.DjangoModelPermissions):
+class IsOwner(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
-        if request.method not in permissions.SAFE_METHODS:
-            return request.user == obj.user
-        return True
+        if request.method == "GET":
+            return True
+        return request.user.username == obj.username
 
 
-'''class IsMod(permissions.DjangoObjectPermissions):
-    def has_object_permission(self, request, view, obj):
-        print("fuffhs", dir(obj))
-        return True
-'''
+class ReadOnly(permissions.BasePermission):
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        return False

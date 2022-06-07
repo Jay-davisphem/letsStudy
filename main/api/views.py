@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import status
 from rest_framework import generics
@@ -25,7 +25,7 @@ from .serializers import (
 )
 from rest_framework import viewsets
 
-from ..permissions import IsOwner
+from ..permissions import IsOwner, ReadOnly
 
 from .. import client
 
@@ -212,3 +212,18 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     lookup_field = "pk"  # default
+
+    def get_permissions(self):
+        if self.action == "create" and self.request.user.is_authenticated:
+            return [
+                ReadOnly(),
+            ]
+        if self.action == "create" and not self.request.user.is_authenticated:
+            return [AllowAny()]
+        if (
+            self.action == "update"
+            or self.action == "partial_update"
+            or self.action == "destroy"
+        ):
+            return [IsOwner()]
+        return super().get_permissions()
